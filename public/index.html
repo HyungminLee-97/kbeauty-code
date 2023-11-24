@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>안녕하세요</h1>
+
+    <!-- 하단부 전부 firebase 관련 코드 -건들지 말 것 -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDDeBsagd24jikTtRYkWiiLetwfcMS_2Iw",
+        authDomain: "kbeauty-7cb9c.firebaseapp.com",
+        projectId: "kbeauty-7cb9c",
+        storageBucket: "kbeauty-7cb9c.appspot.com",
+        messagingSenderId: "138758016371",
+        appId: "1:138758016371:web:96ad5e6de1e728a2ca8906",
+        measurementId: "G-14PV04Z4YP",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+  </body>
+</html>
