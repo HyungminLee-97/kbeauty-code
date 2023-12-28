@@ -23,6 +23,7 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
     <!-- nav -->
@@ -116,6 +117,24 @@
     <!-- 본문 -->
     <div class="container" style="margin-top: 20px;">
         <h1>고객문의</h1>
+        <h7>Home > 고객 문의</h7>
+    </div>
+
+    <!-- form 양식 -->
+    <div class="container custom-container" style="margin-top: 20px;">
+        <strong>회사명</strong>
+        <input type="text" class="form-control mt-2" style="margin-bottom: 20px;" id="compnay-name" placeholder="회사명을 입력해주세요.">
+        <strong>진행희망사업(사업소개참조)</strong>
+        <input type="textarea" class="form-control mt-2" style="margin-bottom: 20px;" id="compnay-name" placeholder="진행 희망 사업을 입력해주세요.">
+        <strong>담당자 전화번호</strong>
+        <input type="text" class="form-control" style="margin-bottom: 20px;" placeholder="010-****-****" id="phone">
+        <strong>담당자 메일</strong>
+        <input type="email" class="form-control" style="margin-bottom: 20px;" placeholder="example@gifutures.com" id="email">
+        <strong>(선택)참고 파일 업로드</strong>
+        <input class="form-control mt-2" style="margin-bottom: 20px;" type="file" id="file">
+        <div class="mb-3">
+            <button type="submit" class="btn btn-dark" id="submit">제출하기</button>
+        </div>
     </div>
 
         <!-- 영업부 연락처 -->
@@ -137,23 +156,6 @@
               </div>
         </div>
 
-    <!-- form 양식 -->
-    <div class="container" style="margin-top: 20px;">
-        <strong>회사명</strong>
-        <input type="text" class="form-control mt-2" style="margin-bottom: 20px;" id="compnay-name" placeholder="회사명을 입력해주세요.">
-        <strong>진행희망사업(사업소개참조)</strong>
-        <input type="textarea" class="form-control mt-2" style="margin-bottom: 20px;" id="compnay-name" placeholder="진행 희망 사업을 입력해주세요.">
-        <strong>담당자 전화번호</strong>
-        <input type="text" class="form-control" style="margin-bottom: 20px;" placeholder="010-****-****" id="phone">
-        <strong>담당자 메일</strong>
-        <input type="email" class="form-control" style="margin-bottom: 20px;" placeholder="example@gifutures.com" id="email">
-        <strong>(선택)참고 파일 업로드</strong>
-        <input class="form-control mt-2" style="margin-bottom: 20px;" type="file" id="file">
-        <div class="mb-3">
-            <button type="submit" class="btn btn-dark" id="submit">제출하기</button>
-        </div>
-    </div>
-
     <!-- footer -->
     <div class="container">
         <div class="card" style="margin-top: 20px; line-height: 0.3;">
@@ -168,7 +170,8 @@
             <p class="card-text"><b>주소:</b> 서울특별시 동대문구 이문로 107, 611호</p>
             <p class="card-text"><b>통신판매업신고번호:</b> </p>
             <p class="card-text"><b>개인정보관리자:</b> </p>
-            <p class="card-text"><b>대표메일:</b> </p>   
+            <p class="card-text"><b>대표메일:</b> </p>
+            <p class="card-text"><b><a href="admin.html" style="color: grey; text-decoration: none;">관리자페이지</a></b></p>   
             <p class="card-text" style="font-size: 12px; letter-spacing: -0.1px; line-height: 1;"><b>© GI Futures, ALL RIGHTS RESERVED.</b></p> <!-- Footer 내의 특정 텍스트 폰트 크기와 자간 조절 -->
             </div>
         </div>

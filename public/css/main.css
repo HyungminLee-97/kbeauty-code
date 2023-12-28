@@ -1,17 +1,6 @@
-/* 관리자페이지 호버 시 active 클래스 활성화 코드 */
-/* 기본 상태에서는 active 클래스 제거 */
-.nav-item a.nav-link {
-  transition: background-color 0.3s ease; /* 부드러운 전환을 위한 설정 */
-}
-
-/* 마우스 호버 시에 active 클래스 추가 */
-.nav-item a.nav-link:hover {
-  background-color: #007bff; /* 호버 시의 배경 색상 설정 (원하는 색상으로 변경) */
-  color: #fff; /* 호버 시의 글자 색상 설정 (원하는 색상으로 변경) */
-}
-
-/* 현재 페이지에서는 active 클래스 유지 */
-.nav-item a.nav-link.active {
-  background-color: #007bff; /* 현재 페이지의 배경 색상 설정 (원하는 색상으로 변경) */
-  color: #fff; /* 현재 페이지의 글자 색상 설정 (원하는 색상으로 변경) */
+/* 커스텀 스타일 컨테이너 */
+.custom-container {
+  background-color: #f8f9fa; /* 밝은 회색 배경 색상 설정 */
+  border-radius: 10px; /* 모서리 둥글게 설정 */
+  padding: 20px; /* 내용과의 간격 조절 */
 }
