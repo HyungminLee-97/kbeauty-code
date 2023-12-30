@@ -4,3 +4,11 @@
   border-radius: 10px; /* 모서리 둥글게 설정 */
   padding: 20px; /* 내용과의 간격 조절 */
 }
+
+/* detail.html에 적용할 상세페이지 css */
+.detail-pic {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}

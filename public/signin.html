@@ -30,7 +30,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">
-          <img src="images/logo.jpg" alt="GI Futures 로고" style="width: 100px; height: 100px;">
+          <img src="images/logo.png" alt="GI Futures 로고" style="width: 100px; height: 100px;">
         </a>
         </a>
         <button
@@ -117,9 +117,32 @@
     <!-- 본문 -->
     <div class="container" style="margin-top: 20px;">
         <h1>회원가입</h1>
+        <h7>관리자 이외 회원가입 시, 탈퇴 처리 됩니다.</h7>
     </div>
     <div class="container custom-container">
         <!-- 본문 내용 삽입 -->
+        <div class="mb-3">
+          <strong>이름</strong>
+          <input type="text" class="form-control" placeholder="홍길동" id="name-new">
+      </div>
+      <div class="mb-3">
+          <strong>E-mail</strong>
+          <input type="email" class="form-control" placeholder="example@gifutures.com" id="email-new">
+      </div>
+      <div class="mb-3">
+          <strong>전화번호</strong>
+          <input type="text" class="form-control" placeholder="010-****-****" id="phone-new">
+      </div>
+      <div class="mb-3">
+          <strong>비밀번호</strong>
+          <input type="password" class="form-control" placeholder="영문, 숫자, 기호 등 조합 6자 이상" id="pw-new">
+      </div>
+      <div class="mb-3">
+          <button type="submit" class="btn btn-success" id="register">가입하기</button>
+      </div>
+      <div class="mb-3">
+          <button type="submit" class="btn btn-secondary" id="login">로그인 하기</button>
+      </div>
     </div>
 
     <!-- footer -->
