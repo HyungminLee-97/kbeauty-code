@@ -126,7 +126,7 @@
         <strong>회사명</strong>
         <input type="text" class="form-control mt-2" style="margin-bottom: 20px;" id="company-name" placeholder="회사명을 입력해주세요.">
         <strong>진행희망사업(사업소개참조)</strong>
-        <input type="textarea" class="form-control mt-2" style="margin-bottom: 20px;" id="biz-item" placeholder="진행 희망 사업을 입력해주세요.">
+        <input type="textarea" class="form-control mt-2" style="margin-bottom: 20px;" id="business" placeholder="진행 희망 사업을 입력해주세요.">
         <strong>담당자 전화번호</strong>
         <input type="text" class="form-control" style="margin-bottom: 20px;" placeholder="010-****-****" id="number">
         <strong>담당자 메일</strong>
@@ -211,8 +211,14 @@
       };
 
       // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      firebase.initializeApp(firebaseConfig);
     </script>
+
+    <script>
+    // 고객문의 업로드 코드
+    const db = firebase.firestor();
+    db.collection('help').add({ })
+    </script>
+    
   </body>
 </html>

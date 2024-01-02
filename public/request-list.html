@@ -120,6 +120,9 @@
     </div>
     <div class="container custom-container">
         <!-- 본문 내용 삽입 -->
+        <div class="product">
+          <!-- 하단 javascript 통해서 자동 게시 -->
+        </div>
     </div>
 
     <!-- footer -->
@@ -176,8 +179,31 @@
       };
 
       // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      firebase.initializeApp(firebaseConfig);
     </script>
+
+    <!-- Database에서 데이터 가져오기 -->
+    <script>
+      const db = firebase.firestore();
+      db.collection('help').get().then((result)=>{
+        result.forEach((doc)=>{
+          console.log(doc.data())
+          const template = `<div class="product">
+          <div class="thumbnail" style="background-image: url('https://via.placeholder.com/350')"></div>
+          <div class="flex-grow-1 p-4">
+            <h5 class="company">회사명: ${doc.data().company}</h5>
+            <p class="business">진행희망사업(사업소개참조): ${doc.data().business}</p>
+            <p class="phone">담당자 전화번호: ${doc.data().phone}</p>
+            <p class="email">담당자 메일: ${doc.data().email}</p>
+            <p class="file">(선택)참고 파일: ${doc.data().file}</p>
+          </div>
+        </div>`; 
+        $('.product').append(template)
+        })
+      })
+
+
+    </script>
+
   </body>
 </html>
