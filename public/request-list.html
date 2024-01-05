@@ -118,12 +118,11 @@
     <div class="container" style="margin-top: 20px;">
         <h1>고객문의</h1>
     </div>
-    <div class="container custom-container">
+
         <!-- 본문 내용 삽입 -->
         <div class="product">
           <!-- 하단 javascript 통해서 자동 게시 -->
         </div>
-    </div>
 
     <!-- footer -->
     <div class="container">
@@ -190,7 +189,7 @@
     result.forEach((doc) => {
       console.log(doc.data())
       const template = `<div class="product">
-        <div class="thumbnail" style="background-image: url('https://via.placeholder.com/350')"></div>
+        <div class="container custom-container">
         <div class="flex-grow-1 p-4">
           <h5 class="company">회사명: ${doc.data().company}</h5>
           <p class="business">진행희망사업(사업소개참조): ${doc.data().business}</p>
@@ -201,7 +200,9 @@
             `<button onclick="downloadFile('${doc.data().file}')">다운로드</button>` :
             '<span>다운로드할 파일이 없습니다.</span>'}</p>
           <p class="date">문의 날짜: ${doc.data().date.toDate().toLocaleString()}</p>
+          </div>
         </div>
+        <br>
       </div>`;
       container.append(template);
     })
