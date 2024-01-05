@@ -182,28 +182,42 @@
       firebase.initializeApp(firebaseConfig);
     </script>
 
-    <!-- Database에서 데이터 가져오기 -->
-    <script>
-      const db = firebase.firestore();
-      db.collection('help').get().then((result)=>{
-        result.forEach((doc)=>{
-          console.log(doc.data())
-          const template = `<div class="product">
-          <div class="thumbnail" style="background-image: url('https://via.placeholder.com/350')"></div>
-          <div class="flex-grow-1 p-4">
-            <h5 class="company">회사명: ${doc.data().company}</h5>
-            <p class="business">진행희망사업(사업소개참조): ${doc.data().business}</p>
-            <p class="phone">담당자 전화번호: ${doc.data().phone}</p>
-            <p class="email">담당자 메일: ${doc.data().email}</p>
-            <p class="file">(선택)참고 파일: ${doc.data().file}</p>
-          </div>
-        </div>`; 
-        $('.product').append(template)
-        })
-      })
+    <!-- Database에서 데이터 가져오기(시간순 정렬) -->
+<script>
+  const db = firebase.firestore();
+  db.collection('help').orderBy("date", "desc").get().then((result) => {
+    const container = $('.product'); // 루프 외부에서 컨테이너 선택 -> 중복 생성 방지
+    result.forEach((doc) => {
+      console.log(doc.data())
+      const template = `<div class="product">
+        <div class="thumbnail" style="background-image: url('https://via.placeholder.com/350')"></div>
+        <div class="flex-grow-1 p-4">
+          <h5 class="company">회사명: ${doc.data().company}</h5>
+          <p class="business">진행희망사업(사업소개참조): ${doc.data().business}</p>
+          <p class="phone">담당자 전화번호: ${doc.data().phone}</p>
+          <p class="email">담당자 메일: ${doc.data().email}</p>
+          <p class="file">(선택)참고 파일
+          ${doc.data().file ?
+            `<button onclick="downloadFile('${doc.data().file}')">다운로드</button>` :
+            '<span>다운로드할 파일이 없습니다.</span>'}</p>
+          <p class="date">문의 날짜: ${doc.data().date.toDate().toLocaleString()}</p>
+        </div>
+      </div>`;
+      container.append(template);
+    })
+  });
 
-
-    </script>
+  // 다운로드 함수 정의
+  function downloadFile(fileName) {
+    // 파일 다운로드 링크 생성
+    const downloadLink = document.createElement("a");
+    downloadLink.href = fileName; // 파일의 실제 링크로 설정
+    downloadLink.download = fileName.split('/').pop(); // 파일 이름 설정 (링크에서 파일 이름만 추출)
+    
+    // 링크를 클릭하여 다운로드 시작
+    downloadLink.click();
+  }
+</script>
 
   </body>
 </html>

@@ -138,10 +138,10 @@
           <input type="password" class="form-control" placeholder="영문, 숫자, 기호 등 조합 6자 이상" id="pw-new">
       </div>
       <div class="mb-3">
-          <button type="submit" class="btn btn-success" id="register">가입하기</button>
+          <button type="submit" class="btn btn-success" id="register">가입</button>
       </div>
       <div class="mb-3">
-          <button type="submit" class="btn btn-secondary" id="login">로그인 하기</button>
+          <button type="submit" class="btn btn-secondary" id="login">로그인</button>
       </div>
     </div>
 
@@ -200,6 +200,34 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      //register 버튼 눌렀을 때 -> 회원가입 활성화
+      $('#register').click(function(){
+
+        const name = $('#name-new').val()
+        const account = $('#email-new').val()
+        const password = $('#pw-new').val()
+        const phone = $('#phone-new').val()
+
+      //로그인 관련 기능 활성화 코드
+      firebase.auth().createUserWithEmailAndPassword(account, password).then((result)=>{
+        console.log(result)
+        console.log(result.user)
+      })
+      })
+
+      //엔터키 입력 시, 회원가입 버튼 누름
+      addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("register").click();
+        }
+      });
     </script>
   </body>
 </html>

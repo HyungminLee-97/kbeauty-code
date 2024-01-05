@@ -129,14 +129,7 @@
               <input type="password" class="form-control" placeholder="비밀번호를 입력하세요" id="pw">
           </div>
           <div class="mb-3">
-              <button type="submit" class="btn btn-success" id="login">로그인 하기</button>
-          </div>
-          <div class="mb-3">
-              <button type="submit" class="btn btn-primary" id="find-id">아이디 찾기</button>
-              <button type="submit" class="btn btn-primary" id="find-pw">비밀번호 찾기</button>
-          </div>
-          <div class="mb-3">
-              <button type="submit" class="btn btn-secondary" id="signin">회원가입 하기</button>
+              <button type="submit" class="btn btn-success" id="login">로그인</button>
           </div>
     </div>
 
@@ -195,6 +188,13 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      
     </script>
   </body>
 </html>
