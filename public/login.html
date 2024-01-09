@@ -194,7 +194,30 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
 
-      
+    //로그인하기
+    $('#login').click(function () {
+      const email = $('#email').val();
+      const password = $('#pw').val();
+
+      firebase.auth().signInWithEmailAndPassword(email, password).then((result) => {
+        alert('관리자 계정 로그인에 성공했습니다.');
+        console.log(result.user)
+        setTimeout(() => window.location.href = "admin.html", 2000);
+      })
+      .catch(function (error) {
+        alert('로그인에 실패했습니다.');
+      })
+    })
+
+    //엔터키 입력 시 로그인
+    addEventListener("keypress", function (event) {
+      if (event.keyCode === 13) {
+      event.preventDefault();
+    document.getElementById("login").click();
+    }
+  });  
+
+
     </script>
   </body>
 </html>

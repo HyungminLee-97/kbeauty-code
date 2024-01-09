@@ -208,7 +208,6 @@
 
       //register 버튼 눌렀을 때 -> 회원가입 활성화
       $('#register').click(function(){
-
         const name = $('#name-new').val()
         const account = $('#email-new').val()
         const password = $('#pw-new').val()
@@ -216,9 +215,25 @@
 
       //로그인 관련 기능 활성화 코드
       firebase.auth().createUserWithEmailAndPassword(account, password).then((result)=>{
-        console.log(result)
-        console.log(result.user)
-      })
+            var user_info = {
+              name: name,
+              email: account,
+              phone: phone,
+              date: new Date(),
+            };
+
+            db.collection("user").doc(result.user.uid).set(user_info);
+
+            console.log(result);
+            console.log(result.user);
+            result.user.updateProfile({ displayName: name });
+
+            alert(name + " 님! 환영합니다. 회원가입이 완료되었습니다.");
+            setTimeout(() => (window.location.href = "admin.html"), 2500);
+          })
+          .catch(function (error) {
+            alert("회원가입에 실패했습니다.");
+          });
       })
 
       //엔터키 입력 시, 회원가입 버튼 누름
