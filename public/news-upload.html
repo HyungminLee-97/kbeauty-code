@@ -118,9 +118,19 @@
     <div class="container" style="margin-top: 20px;">
         <h1>뉴스 업로드</h1>
     </div>
-    <div class="container custom-container">
         <!-- 본문 내용 삽입 -->
-    </div>
+        <!-- form 양식 -->
+    <div class="container custom-container" style="margin-top: 20px;">
+      <strong>뉴스 제목</strong>
+      <input type="text" class="form-control mt-2" style="margin-bottom: 20px;" id="title" placeholder="제목을 입력해주세요.">
+      <strong>본문 작성</strong>
+      <textarea class="form-control mt-2" style="margin-bottom: 20px; width: 100%; height: 750px; border: none; " id="content" placeholder="본문을 입력해주세요."></textarea>
+      <strong>(선택)이미지 업로드</strong>
+      <input class="form-control mt-2" style="margin-bottom: 20px;" type="file" id="image">
+      <div class="mb-3">
+          <button type="submit" class="btn btn-dark" id="submit">업로드</button>
+      </div>
+  </div>
 
     <!-- footer -->
     <div class="container">
@@ -184,6 +194,66 @@
       alert('로그인 후 서비스를 이용하실 수 있습니다.')
       window.location.href = "login.html"
       }
+
+      // 뉴스 업로드 코드
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      $('#submit').click(function(){
+
+      // 필수 입력 확인
+      const title = $('#title').val();
+      const content = $('#content').val();
+
+      if (!title || !content) {
+          alert('필수 입력 항목을 모두 입력하세요.');
+          return;
+      }
+
+      // 이미지 파일 저장
+      const file = document.querySelector('#image').files[0];
+
+      if (file) {
+          const storageRef = storage.ref();
+          const route = storageRef.child('news/' + new Date() + '에 업로드 된, 제목: "' + title + '" 뉴스의 이미지파일');
+          const upload = route.put(file);
+
+      // 참고파일 업로드 성공/실패 시 코드 실행
+      upload.on('state_changed', null, (error) => {
+          console.error('실패사유: ', error);
+      }, () => {
+          upload.snapshot.ref.getDownloadURL().then((url) => {
+              console.log('파일 업로드 경로: ', url);
+
+            // 텍스트 저장
+            const save = {
+                title: title,
+                content: content,
+                file: url,
+                date: new Date(),
+            }
+
+            db.collection('news').add(save).then((result)=>{
+                console.log(result);
+                alert('뉴스가 업로드되었습니다.')
+            })
+        });
+    });
+} else {
+    // 참고 파일이 선택되지 않은 경우
+    const save = {
+        title: title,
+        content: content,
+        date: new Date(),
+    }
+
+    db.collection('news').add(save).then((result)=>{
+        console.log(result);
+        alert('뉴스가 업로드되었습니다.')
+    });
+  }
+})
+
     </script>
   </body>
 </html>
