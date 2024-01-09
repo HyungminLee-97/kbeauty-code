@@ -128,7 +128,7 @@
     <!-- 관리자 컨트롤 영역 -->
     <div class="container" style="display: flex; margin-top: 20px;">
         <div class="row">
-            <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="col-sm-6 mb-3 mb-sm-0" id="signin">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">회원가입</h5>
@@ -137,7 +137,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="login">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">로그인</h5>
@@ -146,7 +146,15 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="col-sm-6" id="logout">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">로그아웃</h5>
+                  <a class="btn btn-dark" type="submit" id="logout">바로가기</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3 mb-sm-0" id="request">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">고객문의</h5>
@@ -155,7 +163,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 mb-3 mb-sm-0">
+              <div class="col-sm-6 mb-3 mb-sm-0" id="news">
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">뉴스업로드</h5>
@@ -221,6 +229,37 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+
+      //로그인 된 계정만 접근 가능 페이지 구성
+      $(function () {
+            if (localStorage.getItem('user') != null) {
+                var 뺀거 = localStorage.getItem('user')
+                $('#userName').html(JSON.parse(뺀거).displayName)
+                document.getElementById("signin").style.display = "none";
+                document.getElementById("login").style.display = "none";
+                document.getElementById("logout").style.display = "";
+                document.getElementById("request").style.display = "";
+                document.getElementById("news").style.display = "";
+            } else {//비로그인 시
+                document.getElementById("signin").style.display = "";
+                document.getElementById("login").style.display = "";
+                document.getElementById("logout").style.display = "none";
+                document.getElementById("request").style.display = "none";
+                document.getElementById("news").style.display = "none";
+            }
+        })
+      
+      //로그아웃 코드
+      $("#logout").click(function () {
+        if (!confirm("정말 로그아웃 하시겠습니까?")) {
+          alert("취소했습니다.");
+        } else {
+          firebase.auth().signOut();
+          localStorage.removeItem("user");
+          setTimeout(() => (window.location.href = "index.html"), 3500);
+          alert("로그아웃을 완료했습니다.");
+        }
+      });
     </script>
   </body>
 </html>

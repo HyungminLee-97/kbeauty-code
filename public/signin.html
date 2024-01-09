@@ -206,6 +206,15 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
 
+        //로그인 시 로컬스토리지에 계정 정보 저장
+          firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+            console.log(user.uid);
+            console.log(user.displayName);
+            localStorage.setItem("user", JSON.stringify(user));
+            }
+          });
+
       //register 버튼 눌렀을 때 -> 회원가입 활성화
       $('#register').click(function(){
         const name = $('#name-new').val()
