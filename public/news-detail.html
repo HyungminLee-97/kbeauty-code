@@ -121,14 +121,16 @@
     </div>
     <div class="container custom-container">
         <div class="container">
-            <div class="detail-pic my-4" style="background-image: url('https://picsum.photos/400');"></div>
+            <div class="detail-pic my-4" style="background-image: url('');"></div>
             <div>
-              <h5>제목 : 모름</h5>
-              <h6 class="date">올린날짜</h6>
+              <h5 class="title"></h5>
+              <h6 class="date"></h6>
               <hr>
-              <p class="date">내용</p>
+              <p class="content"></p>
             </div>
         </div>
+        <button class="btn btn-outline-secondary" id="edit">수정</button>
+        <button class="btn btn-outline-secondary" id="delete">삭제</button>
     </div>
 
     <!-- footer -->
@@ -186,6 +188,35 @@
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+
+      //뉴스 글 불러오기
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      let title;
+      let content;
+      let date;
+      let url;
+
+      let queryString = new URLSearchParams(window.location.search);
+
+      db.collection("news")
+        .doc(queryString.get("id"))
+        .get()
+        .then((result) => {
+          console.log(result.data());
+          productID = queryString.get("id");
+          title = result.data().title;
+          content = result.data().content;
+          date = result.data().date;
+          url = result.data().file;
+
+          $(".title").html(result.data().title);
+          $(".content").html(result.data().content);
+          $(".date").html(result.data().date.toDate().toLocaleString());
+          $(".detail-pic").css("background-image", `url('${url || 'images/logo.png'}')`);
+        });
+
     </script>
   </body>
 </html>
