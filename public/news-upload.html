@@ -1,4 +1,3 @@
-<!-- 3PL in USA -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>뉴스 업로드</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
-    <!--파비콘-->
+    <!-- 파비콘 -->
     <meta property="og:image" content="images/logo.jpg" />
-    <!--링크 이미지-->
+    <!-- 링크 이미지 -->
     <meta property="og:title" content="Your Best K-Beauty Partner in U.S.A." />
-    <!--링크 타이틀-->
+    <!-- 링크 타이틀 -->
     <meta
       property="og:description"
       content="Your Best K-Beauty Business Partner"
     />
-    <!--링크 세부정보-->
+    <!-- 링크 세부정보 -->
     <!-- Bootstrap 5 CSS 파일 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
@@ -23,15 +22,18 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
     <!-- nav -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">
-          <img src="images/logo.png" alt="GI Futures 로고" style="width: 100px; height: 100px;">
-        </a>
+          <img
+            src="images/logo.png"
+            alt="GI Futures 로고"
+            style="width: 100px; height: 100px"
+          />
         </a>
         <button
           class="navbar-toggler"
@@ -115,45 +117,88 @@
     </nav>
 
     <!-- 본문 -->
-    <div class="container" style="margin-top: 20px;">
-        <h1>뉴스 업로드</h1>
+    <div class="container" style="margin-top: 20px">
+      <h1>뉴스 업로드</h1>
     </div>
-        <!-- 본문 내용 삽입 -->
-        <!-- form 양식 -->
-    <div class="container custom-container" style="margin-top: 20px;">
+    <!-- 본문 내용 삽입 -->
+    <!-- form 양식 -->
+    <div class="container custom-container" style="margin-top: 20px">
       <strong>뉴스 제목</strong>
-      <input type="text" class="form-control mt-2" style="margin-bottom: 20px;" id="title" placeholder="제목을 입력해주세요.">
+      <input
+        type="text"
+        class="form-control mt-2"
+        style="margin-bottom: 20px"
+        id="title"
+        placeholder="제목을 입력해주세요."
+      />
       <strong>본문 작성</strong>
-      <textarea class="form-control mt-2" style="margin-bottom: 20px; width: 100%; height: 350px; border: none; " id="content" placeholder="본문을 입력해주세요."></textarea>
+      <textarea
+        class="form-control mt-2"
+        style="margin-bottom: 20px; width: 100%; height: 350px; border: none"
+        id="content"
+        placeholder="본문을 입력해주세요."
+      ></textarea>
       <strong>(선택)이미지 업로드</strong>
-      <input class="form-control mt-2" style="margin-bottom: 20px;" type="file" id="image">
+      <input
+        class="form-control mt-2"
+        style="margin-bottom: 20px"
+        type="file"
+        id="image"
+      />
       <div class="mb-3">
-          <button type="submit" class="btn btn-dark" id="submit">업로드</button>
+        <button type="submit" class="btn btn-dark" id="submit">업로드</button>
       </div>
-  </div>
+      <!-- 업로드 진행상황 -->
+      <div
+      class="progress"
+      role="progressbar"
+      aria-label="Example with label"
+      aria-valuenow="0"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      style="display: none;" 
+      <!-- 초기에는 숨겨두기 -->
+      <div class="progress-bar" style="width: 0%">0%</div>
+    </div>
 
     <!-- footer -->
     <div class="container">
-        <div class="card" style="margin-top: 20px; line-height: 0.3;">
-            <div class="card-header" style="font-size: 18px; letter-spacing: -2px;"> <!-- Header 폰트 크기와 자간 조절 -->
-            회사 소개
-            </div>
-            <div class="card-body" style="font-size: 14px; letter-spacing: -1px;"> <!-- Body 폰트 크기와 자간 조절 -->
-            <h5 class="card-title">GI Futures</h5>
-            <p class="card-text">Your Best K-Beauty Business Partner</p>
-            <p class="card-text"><b>대표:</b> </p> 
-            <p class="card-text"><b>사업자등록번호:</b> </p> 
-            <p class="card-text"><b>주소:</b> 서울특별시 동대문구 이문로 107, 611호</p>
-            <p class="card-text"><b>통신판매업신고번호:</b> </p>
-            <p class="card-text"><b>개인정보관리자:</b> </p>
-            <p class="card-text"><b>대표메일:</b> </p>
-            <p class="card-text"><b><a href="admin.html" style="color: grey; text-decoration: none;">관리자페이지</a></b></p>   
-            <p class="card-text" style="font-size: 12px; letter-spacing: -0.1px; line-height: 1;"><b>© GI Futures, ALL RIGHTS RESERVED.</b></p> <!-- Footer 내의 특정 텍스트 폰트 크기와 자간 조절 -->
-            </div>
+      <div class="card" style="margin-top: 20px; line-height: 0.3">
+        <div class="card-header" style="font-size: 18px; letter-spacing: -2px">
+          <!-- Header 폰트 크기와 자간 조절 -->
+          회사 소개
         </div>
+        <div class="card-body" style="font-size: 14px; letter-spacing: -1px">
+          <!-- Body 폰트 크기와 자간 조절 -->
+          <h5 class="card-title">GI Futures</h5>
+          <p class="card-text">Your Best K-Beauty Business Partner</p>
+          <p class="card-text"><b>대표:</b></p>
+          <p class="card-text"><b>사업자등록번호:</b></p>
+          <p class="card-text">
+            <b>주소:</b> 서울특별시 동대문구 이문로 107, 611호
+          </p>
+          <p class="card-text"><b>통신판매업신고번호:</b></p>
+          <p class="card-text"><b>개인정보관리자:</b></p>
+          <p class="card-text"><b>대표메일:</b></p>
+          <p class="card-text">
+            <b
+              ><a href="admin.html" style="color: grey; text-decoration: none"
+                >관리자페이지</a
+              ></b
+            >
+          </p>
+          <p
+            class="card-text"
+            style="font-size: 12px; letter-spacing: -0.1px; line-height: 1"
+          >
+            <b>© GI Futures, ALL RIGHTS RESERVED.</b>
+          </p>
+          <!-- Footer 내의 특정 텍스트 폰트 크기와 자간 조절 -->
+        </div>
+      </div>
     </div>
 
-    <!-- 하단부 전부 firebase 관련 코드 -건들지 말 것 -->
+    <!-- 하단부 전부 firebase 관련 코드 - 건들지 말 것 -->
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
@@ -188,72 +233,95 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
 
-      //관리자만 접근 권한 부여
-      if (localStorage.getItem('user') != null) {
-      } else {//비 로그인 시,
-      alert('로그인 후 서비스를 이용하실 수 있습니다.')
-      window.location.href = "login.html"
+      // 관리자만 접근 권한 부여
+      if (localStorage.getItem("user") != null) {
+      } else {
+        // 비 로그인 시,
+        alert("로그인 후 서비스를 이용하실 수 있습니다.");
+        window.location.href = "login.html";
       }
 
       // 뉴스 업로드 코드
       const db = firebase.firestore();
       const storage = firebase.storage();
 
-      $('#submit').click(function(){
+      $("#submit").click(function () {
+        // 필수 입력 확인
+        const title = $("#title").val();
+        const content = $("#content").val();
 
-      // 필수 입력 확인
-      const title = $('#title').val();
-      const content = $('#content').val();
-
-      if (!title || !content) {
-          alert('필수 입력 항목을 모두 입력하세요.');
+        if (!title || !content) {
+          alert("필수 입력 항목을 모두 입력하세요.");
           return;
-      }
+        }
 
-      // 이미지 파일 저장
-      const file = document.querySelector('#image').files[0];
+        // 이미지 파일 저장
+        const file = document.querySelector("#image").files[0];
 
-      if (file) {
+        if (file) {
           const storageRef = storage.ref();
-          const route = storageRef.child('news/' + new Date() + '에 업로드 된, 제목: "' + title + '" 뉴스의 이미지파일');
+          const route = storageRef.child(
+            "news/" +
+              new Date() +
+              '에 업로드 된, 제목: "' +
+              title +
+              '" 뉴스의 이미지파일'
+          );
           const upload = route.put(file);
 
-      // 참고파일 업로드 성공/실패 시 코드 실행
-      upload.on('state_changed', null, (error) => {
-          console.error('실패사유: ', error);
-      }, () => {
-          upload.snapshot.ref.getDownloadURL().then((url) => {
-              console.log('파일 업로드 경로: ', url);
 
-            // 텍스트 저장
-            const save = {
-                title: title,
-                content: content,
-                file: url,
-                date: new Date(),
-            }
+          // 업로드 진행상황 표시
+    $('.progress').show();
 
-            db.collection('news').add(save).then((result)=>{
-                console.log(result);
-                alert('뉴스가 업로드되었습니다.')
-            })
+// 참고파일 업로드 성공/실패 시 코드 실행
+upload.on('state_changed', (snapshot) => {
+    // 진행률 계산
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+    // 프로그레스 바의 너비 업데이트
+    $('.progress-bar').css('width', progress + '%');
+    $('.progress-bar').text(progress + '%');
+}, (error) => {
+    console.error('실패사유: ', error);
+}, () => {
+    upload.snapshot.ref.getDownloadURL().then((url) => {
+        console.log('파일 업로드 경로: ', url);
+
+        // 텍스트 저장
+        const save = {
+            title: title,
+            content: content,
+            file: url,
+            date: new Date(),
+        }
+
+        db.collection('news').add(save).then((result)=>{
+            console.log(result);
+            alert('뉴스가 업로드 되었습니다.');
+
+            // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
+            $('.progress-bar').css('width', '0%');
+            $('.progress-bar').text('0%');
+            $('.progress').hide();
         });
     });
-} else {
-    // 참고 파일이 선택되지 않은 경우
-    const save = {
-        title: title,
-        content: content,
-        date: new Date(),
-    }
+});
+        } else {
+          // 참고 파일이 선택되지 않은 경우
+          const save = {
+            title: title,
+            content: content,
+            date: new Date(),
+          };
 
-    db.collection('news').add(save).then((result)=>{
-        console.log(result);
-        alert('뉴스가 업로드되었습니다.')
-    });
-  }
-})
-
+          db.collection("news")
+            .add(save)
+            .then((result) => {
+              console.log(result);
+              alert("뉴스가 업로드 되었습니다.");
+            });
+        }
+      });
     </script>
   </body>
 </html>

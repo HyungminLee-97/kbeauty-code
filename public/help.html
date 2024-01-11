@@ -136,6 +136,18 @@
         <div class="mb-3">
             <button type="submit" class="btn btn-dark" id="submit">제출하기</button>
         </div>
+        <!-- 업로드 진행상황 -->
+        <div
+            class="progress"
+            role="progressbar"
+            aria-label="Example with label"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="display: none;" 
+            <!-- 초기에는 숨겨두기 -->
+            <div class="progress-bar" style="width: 0%">0%</div>
+        </div>
     </div>
 
         <!-- 영업부 연락처 -->
@@ -241,43 +253,58 @@ if (file) {
     const route = storageRef.child('help/' + company + '의 참고파일');
     const upload = route.put(file);
 
-    // 참고파일 업로드 성공/실패 시 코드 실행
-    upload.on('state_changed', null, (error) => {
-        console.error('실패사유: ', error);
-    }, () => {
-        upload.snapshot.ref.getDownloadURL().then((url) => {
-            console.log('파일 업로드 경로: ', url);
+    // 업로드 진행상황 표시
+    $('.progress').show();
 
-            // 텍스트 저장
-            const save = {
-                company: company,
-                business: business,
-                phone: number,
-                email: email,
-                file: url,
-                date: new Date(),
-            }
+// 참고파일 업로드 성공/실패 시 코드 실행
+upload.on('state_changed', (snapshot) => {
+    // 진행률 계산
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-            db.collection('help').add(save).then((result)=>{
-                console.log(result);
-                alert('문의가 등록되었습니다.')
-            })
+    // 프로그레스 바의 너비 업데이트
+    $('.progress-bar').css('width', progress + '%');
+    $('.progress-bar').text(progress + '%');
+}, (error) => {
+    console.error('실패사유: ', error);
+}, () => {
+    upload.snapshot.ref.getDownloadURL().then((url) => {
+        console.log('파일 업로드 경로: ', url);
+
+        // 텍스트 저장
+        const save = {
+            company: company,
+            business: business,
+            phone: number,
+            email: email,
+            file: url,
+            date: new Date(),
+        }
+
+        db.collection('help').add(save).then((result)=>{
+            console.log(result);
+            alert('문의가 등록되었습니다.');
+
+            // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
+            $('.progress-bar').css('width', '0%');
+            $('.progress-bar').text('0%');
+            $('.progress').hide();
         });
     });
+});
 } else {
-    // 참고 파일이 선택되지 않은 경우
-    const save = {
-        company: company,
-        business: business,
-        phone: number,
-        email: email,
-        date: new Date(),
-    }
+// 참고 파일이 선택되지 않은 경우
+const save = {
+    company: company,
+    business: business,
+    phone: number,
+    email: email,
+    date: new Date(),
+}
 
-    db.collection('help').add(save).then((result)=>{
-        console.log(result);
-        alert('문의가 등록되었습니다.')
-    });
+db.collection('help').add(save).then((result)=>{
+    console.log(result);
+    alert('문의가 등록되었습니다.');
+});
 }
 })
 </script>
