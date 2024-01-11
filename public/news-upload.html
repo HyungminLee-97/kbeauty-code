@@ -292,6 +292,7 @@ upload.on('state_changed', (snapshot) => {
             title: title,
             content: content,
             file: url,
+            uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
             date: new Date(),
         }
 
@@ -311,6 +312,7 @@ upload.on('state_changed', (snapshot) => {
           const save = {
             title: title,
             content: content,
+            uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
             date: new Date(),
           };
 
