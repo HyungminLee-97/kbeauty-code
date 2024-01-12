@@ -217,6 +217,43 @@
           $(".detail-pic").css("background-image", `url('${url || 'images/logo.png'}')`);
         });
 
+
+        // 로그인 uid
+        const user = JSON.parse(localStorage.getItem("user"));
+        const login_uid = user ? user.uid : null;
+        console.log("login uid: ", login_uid);
+
+        // 뉴스 글 불러오기
+        db.collection("news")
+          .doc(queryString.get("id"))
+          .get()
+          .then((result) => {
+            console.log(result.data());
+            productID = queryString.get("id");
+            title = result.data().title;
+            content = result.data().content;
+            date = result.data().date;
+            url = result.data().file;
+
+            $(".title").html(result.data().title);
+            $(".content").html(result.data().content);
+            $(".date").html(result.data().date.toDate().toLocaleString());
+            $(".detail-pic").css("background-image", `url('${url || 'images/logo.png'}')`);
+
+            //업로더 uid
+            uploader_uid = result.data().uploader_uid;
+            console.log(uploader_uid)
+
+            // 로그인 uid가 존재하고, 로그인 uid와 업로더 uid가 일치할 시 -> 삭제/수정 버튼 표시
+            if (login_uid && login_uid === 'PAmHZtKNrbQCkma4Eb1k5M8yTbx1') {
+              document.getElementById("edit").style.display = "";
+              document.getElementById("delete").style.display = "";
+            } else {
+              // 그렇지 않을 경우 -> 삭제/수정 버튼 감춤
+              document.getElementById("edit").style.display = "none";
+              document.getElementById("delete").style.display = "none";
+            }
+          });
     </script>
   </body>
 </html>

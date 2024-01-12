@@ -1,7 +1,7 @@
 let queryString = new URLSearchParams(window.location.search);
 
 //로그인 uid
-login_uid = localStorage.getItem("user").uid;
+login_uid = JSON.parse(localStorage.getItem("user")).uid;
 //news 업로더 uid
 uploader_uid = db.collection("news").get().uid;
 
