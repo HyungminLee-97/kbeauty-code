@@ -242,7 +242,7 @@
 
             //업로더 uid
             uploader_uid = result.data().uploader_uid;
-            console.log(uploader_uid)
+            console.log('uploader uid: ', uploader_uid)
 
             // 로그인 uid가 존재하고, 로그인 uid와 업로더 uid가 일치할 시 -> 삭제/수정 버튼 표시
             if (login_uid && login_uid === 'PAmHZtKNrbQCkma4Eb1k5M8yTbx1') {
@@ -252,6 +252,33 @@
               // 그렇지 않을 경우 -> 삭제/수정 버튼 감춤
               document.getElementById("edit").style.display = "none";
               document.getElementById("delete").style.display = "none";
+            }
+          });
+      
+          //수정 기능
+          $("#edit").click(function () {
+            window.location.href = "news-edit.html?id=" + queryString.get("id");
+          });
+          //삭제 기능
+          $("#delete").click(function () {
+            if (!confirm("삭제 하시겠습니까?")) {
+              alert("취소했습니다.");
+            } else {
+              db.collection("news")
+                .doc(queryString.get("id"))
+                .delete()
+                .then(() => {
+                  console.log("삭제 완료");
+                  alert("삭제가 완료되었습니다.");
+                });
+
+              // 이미지가 존재할 때만 삭제 수행
+              if (url) {
+                let imageRef = storage.refFromURL(url);
+                imageRef.delete();
+              }
+
+              setTimeout(() => (window.location.href = "news.html"), 1500);
             }
           });
     </script>

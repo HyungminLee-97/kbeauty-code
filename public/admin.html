@@ -1,16 +1,11 @@
-<!-- 어드민 회원가입 기능 구성 -->
-<!-- 1. 회원가입 기능 -->
-<!-- 2. 로그인 기능 -->
-<!-- 3. 고객 문의 들어온 거 확인하는 게시판 표시 -->
-<!-- 4. 뉴스 업로드 기능 -->
-<!-- 단, 3번 4번에 해당하는 기능은 로그인 시에만 출력되도록 할 것 -->
+<!-- 어드민-->
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관리자 페이지</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
     <!--파비콘-->
     <meta property="og:image" content="images/logo.jpg" />
     <!--링크 이미지-->
@@ -233,8 +228,8 @@
       //로그인 된 계정만 접근 가능 페이지 구성
       $(function () {
             if (localStorage.getItem('user') != null) {
-                var 뺀거 = localStorage.getItem('user')
-                $('#userName').html(JSON.parse(뺀거).displayName)
+                let login = localStorage.getItem('user')
+                console.log('로그인 계정: ',JSON.parse(login).uid)
                 document.getElementById("signin").style.display = "none";
                 document.getElementById("login").style.display = "none";
                 document.getElementById("logout").style.display = "";
