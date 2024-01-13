@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>뉴스 업로드</title>
+    <title>(수정)뉴스 업로드</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
     <!-- 파비콘 -->
     <meta property="og:image" content="images/logo.jpg" />
@@ -118,12 +118,12 @@
 
     <!-- 본문 -->
     <div class="container" style="margin-top: 20px">
-      <h1>뉴스 업로드</h1>
+      <h1>(수정)뉴스 업로드</h1>
     </div>
     <!-- 본문 내용 삽입 -->
     <!-- form 양식 -->
     <div class="container custom-container" style="margin-top: 20px">
-      <strong>뉴스 제목</strong>
+      <strong>(수정)뉴스 제목</strong>
       <input
         type="text"
         class="form-control mt-2"
@@ -150,13 +150,14 @@
       </div>
       <!-- 업로드 진행상황 -->
       <div
-      class="progress"
-      role="progressbar"
-      aria-label="Example with label"
-      aria-valuenow="0"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      style="display: none;" 
+        class="progress"
+        role="progressbar"
+        aria-label="Example with label"
+        aria-valuenow="0"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="display: none"
+      ></div>
       <!-- 초기에는 숨겨두기 -->
       <div class="progress-bar" style="width: 0%">0%</div>
     </div>
@@ -245,83 +246,224 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
 
-      $("#submit").click(function () {
-        // 필수 입력 확인
-        const title = $("#title").val();
-        const content = $("#content").val();
+      //기존 이미지 파일 url 변수 선언
+      let url;
 
-        if (!title || !content) {
-          alert("필수 입력 항목을 모두 입력하세요.");
-          return;
-        }
+      let queryString = new URLSearchParams(window.location.search);
+      queryString.get("id");
 
-        // 이미지 파일 저장
-        const file = document.querySelector("#image").files[0];
-
-        if (file) {
-          const storageRef = storage.ref();
-          const route = storageRef.child(
-            "news/" +
-              new Date() +
-              '에 업로드 된, 제목: "' +
-              title +
-              '" 뉴스의 이미지파일'
-          );
-          const upload = route.put(file);
-
-
-          // 업로드 진행상황 표시
-    $('.progress').show();
-
-// 참고파일 업로드 성공/실패 시 코드 실행
-upload.on('state_changed', (snapshot) => {
-    // 진행률 계산
-    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-    // 프로그레스 바의 너비 업데이트
-    $('.progress-bar').css('width', progress + '%');
-    $('.progress-bar').text(progress + '%');
-}, (error) => {
-    console.error('실패사유: ', error);
-}, () => {
-    upload.snapshot.ref.getDownloadURL().then((url) => {
-        console.log('파일 업로드 경로: ', url);
-
-        // 텍스트 저장
-        const save = {
-            title: title,
-            content: content,
-            file: url,
-            uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
-            date: new Date(),
-        }
-
-        db.collection('news').add(save).then((result)=>{
-            console.log(result);
-            alert('뉴스가 업로드 되었습니다.');
-
-            // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
-            $('.progress-bar').css('width', '0%');
-            $('.progress-bar').text('0%');
-            $('.progress').hide();
+      //기존 작성 게시물 가져오기
+      db.collection("news")
+        .doc(queryString.get("id"))
+        .get()
+        .then((result) => {
+          console.log(result.data());
+          $("#title").val(result.data().title);
+          $("#content").val(result.data().content);
+          $("#date").val(result.data().date);
+          url = result.data().file;
         });
-    });
-});
-        } else {
-          // 참고 파일이 선택되지 않은 경우
-          const save = {
-            title: title,
-            content: content,
-            uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
-            date: new Date(),
-          };
 
+      //현재 로그인 된 계정(uid)
+      let login_uid = JSON.parse(localStorage.getItem("user")).uid;
+      console.log("login_uid: ", login_uid);
+
+      $("#submit").click(() => {
+        //이미지 파일이 존재하는 게시물
+        if (url) {
+          console.log("기존 이미지 파일 url:", url);
+          //수정 이전 file 삭제(storage)
+          let imageRef = storage.refFromURL(url);
+          imageRef.delete();
+          // Firestore에서 데이터 삭제
           db.collection("news")
-            .add(save)
-            .then((result) => {
-              console.log(result);
-              alert("뉴스가 업로드 되었습니다.");
+            .doc(queryString.get("id"))
+            .delete()
+            .then(() => {
+              console.log("Firestore에서 데이터가 성공적으로 삭제되었습니다.");
             });
+          // 필수 입력 확인
+          const title = $("#title").val();
+          const content = $("#content").val();
+
+          if (!title || !content) {
+            alert("필수 입력 항목을 모두 입력하세요.");
+            return;
+          }
+
+          // 이미지 파일 저장
+          const file = document.querySelector("#image").files[0];
+
+          if (file) {
+            const storageRef = storage.ref();
+            const route = storageRef.child(
+              "news/" +
+                new Date() +
+                '에 업로드 된, 제목: "' +
+                title +
+                '" 뉴스의 이미지파일'
+            );
+            const upload = route.put(file);
+
+            // 업로드 진행상황 표시
+            $(".progress").show();
+
+            // 참고파일 업로드 성공/실패 시 코드 실행
+            upload.on(
+              "state_changed",
+              (snapshot) => {
+                // 진행률 계산
+                const progress =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                // 프로그레스 바의 너비 업데이트
+                $(".progress-bar").css("width", progress + "%");
+                $(".progress-bar").text(progress + "%");
+              },
+              (error) => {
+                console.error("실패사유: ", error);
+              },
+              () => {
+                upload.snapshot.ref.getDownloadURL().then((url) => {
+                  console.log("파일 업로드 경로: ", url);
+
+                  // 텍스트 저장
+                  const save = {
+                    title: title,
+                    content: content,
+                    file: url,
+                    uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
+                    date: new Date(),
+                  };
+
+                  db.collection("news")
+                    .add(save)
+                    .then((result) => {
+                      console.log(result);
+                      alert("수정이 완료되었습니다.");
+
+                      // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
+                      $(".progress-bar").css("width", "0%");
+                      $(".progress-bar").text("0%");
+                      $(".progress").hide();
+                    });
+                });
+              }
+            );
+          } else {
+            // 참고 파일이 선택되지 않은 경우
+            const save = {
+              title: title,
+              content: content,
+              uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
+              date: new Date(),
+            };
+
+            db.collection("news")
+              .add(save)
+              .then((result) => {
+                console.log(result);
+                alert("수정이 완료되었습니다.");
+              });
+          }
+        }
+
+        //이미지 파일이 존재하지 않는 게시물
+        else {
+          console.log("이미지 파일이 존재하지 않는 게시물입니다.");
+
+          // Firestore에서 데이터 삭제
+          db.collection("news")
+            .doc(queryString.get("id"))
+            .delete()
+            .then(() => {
+              console.log("Firestore에서 데이터가 성공적으로 삭제되었습니다.");
+            });
+
+          // 필수 입력 확인
+          const title = $("#title").val();
+          const content = $("#content").val();
+
+          if (!title || !content) {
+            alert("필수 입력 항목을 모두 입력하세요.");
+            return;
+          }
+
+          // 이미지 파일 저장
+          const file = document.querySelector("#image").files[0];
+
+          if (file) {
+            const storageRef = storage.ref();
+            const route = storageRef.child(
+              "news/" +
+                new Date() +
+                '에 업로드 된, 제목: "' +
+                title +
+                '" 뉴스의 이미지파일'
+            );
+            const upload = route.put(file);
+
+            // 업로드 진행상황 표시
+            $(".progress").show();
+
+            // 참고파일 업로드 성공/실패 시 코드 실행
+            upload.on(
+              "state_changed",
+              (snapshot) => {
+                // 진행률 계산
+                const progress =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                // 프로그레스 바의 너비 업데이트
+                $(".progress-bar").css("width", progress + "%");
+                $(".progress-bar").text(progress + "%");
+              },
+              (error) => {
+                console.error("실패사유: ", error);
+              },
+              () => {
+                upload.snapshot.ref.getDownloadURL().then((url) => {
+                  console.log("파일 업로드 경로: ", url);
+
+                  // 텍스트 저장
+                  const save = {
+                    title: title,
+                    content: content,
+                    file: url,
+                    uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
+                    date: new Date(),
+                  };
+
+                  db.collection("news")
+                    .add(save)
+                    .then((result) => {
+                      console.log(result);
+                      alert("수정이 완료되었습니다.");
+
+                      // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
+                      $(".progress-bar").css("width", "0%");
+                      $(".progress-bar").text("0%");
+                      $(".progress").hide();
+                    });
+                });
+              }
+            );
+          } else {
+            // 참고 파일이 선택되지 않은 경우
+            const save = {
+              title: title,
+              content: content,
+              uploader_uid: JSON.parse(localStorage.getItem("user")).uid,
+              date: new Date(),
+            };
+            db.collection("news")
+              .doc(queryString.get("id"))
+              .update(save)
+              .then((result) => {
+                console.log(result);
+                alert("수정이 완료되었습니다.");
+              });
+          }
         }
       });
     </script>
