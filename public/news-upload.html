@@ -298,7 +298,7 @@ upload.on('state_changed', (snapshot) => {
         db.collection('news').add(save).then((result)=>{
             console.log(result);
             alert('뉴스가 업로드 되었습니다.');
-            setTimeout(() => history.back(), 1000);
+            setTimeout(() => window.location.href = "news.html", 1000);
 
             // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
             $('.progress-bar').css('width', '0%');
@@ -321,7 +321,7 @@ upload.on('state_changed', (snapshot) => {
             .then((result) => {
               console.log(result);
               alert("뉴스가 업로드 되었습니다.");
-              setTimeout(() => history.back(), 1000);
+              setTimeout(() => window.location.href = "news.html", 1000);
             });
         }
       });

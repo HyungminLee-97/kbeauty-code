@@ -341,7 +341,7 @@
                     .then((result) => {
                       console.log(result);
                       alert("수정이 완료되었습니다.");
-                      setTimeout(() => history.back(), 1000);
+                      setTimeout(() => window.location.href = "news.html", 1000);
 
                       // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
                       $(".progress-bar").css("width", "0%");
@@ -365,7 +365,7 @@
               .then((result) => {
                 console.log(result);
                 alert("수정이 완료되었습니다.");
-                setTimeout(() => history.back(), 1000);
+                setTimeout(() => window.location.href = "news.html", 1000);
               });
           }
         }
@@ -441,7 +441,7 @@
                     .then((result) => {
                       console.log(result);
                       alert("수정이 완료되었습니다.");
-                      setTimeout(() => history.back(), 1000);
+                      setTimeout(() => window.location.href = "news.html", 1000);
 
                       // 업로드 완료 시, 프로그레스 바 초기화 및 숨김
                       $(".progress-bar").css("width", "0%");
@@ -465,7 +465,7 @@
               .then((result) => {
                 console.log(result);
                 alert("수정이 완료되었습니다.");
-                setTimeout(() => history.back(), 1000);
+                setTimeout(() => window.location.href = "news.html", 1000);
               });
           }
         }
