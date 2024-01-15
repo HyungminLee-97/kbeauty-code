@@ -210,112 +210,102 @@
           const newsItem = doc.data();
           newsItem.id = doc.id;
           newsData.push(newsItem);
-              console.log(newsItem.id)
+        });
 
-          // pagination 설정
-          const itemsPerPage = 5; // 한 페이지에 보여질 뉴스 수
-          const container = $('.news');
-          const paginationContainer = $('#pagination-container');
+        // pagination 설정 부분
+        const itemsPerPage = 5;
+        const paginationContainer = $('#pagination-container');
+        const prevButton = $('#prev-btn');
+        const nextButton = $('#next-btn');
+        const totalPages = Math.ceil(newsData.length / itemsPerPage);
 
-          // pagination 및 previous, next 버튼 설정
-          const prevButton = $('#prev-btn');
-          const nextButton = $('#next-btn');
+        // Pagination 생성 부분
+        for (let i = 1; i <= totalPages; i++) {
+          const paginationItem = `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+          paginationContainer.append(paginationItem);
+        }
 
-          //총 페이지 수 변수 선언
-          const totalPages = Math.ceil(newsData.length / itemsPerPage);
-          console.log(totalPages)
-            
-          // Pagination 생성
-          for (let i = 1; i <= totalPages; i++) {
-            const paginationItem = `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        // 첫 페이지 로딩
+        showNewsPage(1, newsData);
+
+        // 페이지 클릭 이벤트를 document 전체에 걸어서 처리
+        $(document).on('click', '#pagination-container .page-link', function (e) {
+          e.preventDefault();
+          const selectedPage = parseInt($(this).data('page'));
+          showNewsPage(selectedPage, newsData);
+          $('html, body').animate({
+            scrollTop: $('.container').offset().top
+          }, 'slow');
+        });
+
+        // 이전 버튼 클릭 이벤트 처리
+        prevButton.on('click', function () {
+          const currentPage = parseInt(paginationContainer.find('.active').text());
+          if (currentPage > 1) {
+            showNewsPage(currentPage - 1, newsData);
+          }
+        });
+
+        // 다음 버튼 클릭 이벤트 처리
+        nextButton.on('click', function () {
+          const currentPage = parseInt(paginationContainer.find('.active').text());
+          if (currentPage < totalPages) {
+            showNewsPage(currentPage + 1, newsData);
+          }
+        });
+
+        //showPagination 함수 추가
+        function showPagination(currentPage, totalPages) {
+          paginationContainer.empty();
+
+          const startPage = Math.max(1, currentPage - 2);
+          const endPage = Math.min(totalPages, startPage + 4);
+
+          for (let i = startPage; i <= endPage; i++) {
+            const paginationItem = `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
             paginationContainer.append(paginationItem);
           }
-  
-          // 첫 페이지 로딩
-          showNewsPage(1, newsData);
+        }
 
-          // 페이지 클릭 이벤트를 document 전체에 걸어서 처리
-          $(document).on('click', '#pagination-container .page-link', function (e) {
-            e.preventDefault();
-            const selectedPage = parseInt($(this).data('page'));
-            showNewsPage(selectedPage, newsData);
+        function showNewsPage(page, data) {
+          const startIndex = (page - 1) * itemsPerPage;
+          const endIndex = startIndex + itemsPerPage;
+          const currentPageData = data.slice(startIndex, endIndex);
 
-            // 스크롤 이동
-            $('html, body').animate({
-              scrollTop: $('.container').offset().top
-            }, 'slow');
+          container.empty();
+
+          currentPageData.forEach((item) => {
+            const imageUrl = item.file || 'images/logo.png';
+            const news_template = `<div class="container mt-3">
+              <div class="custom-container">
+                <div class="product">
+                  <div class="thumbnail" style="background-image: url('${imageUrl}')"></div>
+                  <div class="flex-grow-1 p-4">
+                    <h5 class="title"><a href="news-detail.html?id=${item.id}">${item.title}</a></h5>
+                    <p class="date">${item.date.toDate().toLocaleString()}</p>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+            container.append(news_template);
           });
 
-            // 이전 버튼 클릭 이벤트 처리
-            prevButton.on('click', function () {
-              const currentPage = parseInt(paginationContainer.find('.active').text());
-              if (currentPage > 1) {
-                showNewsPage(currentPage - 1, newsData);
-              }
-            });
+          // Pagination 및 Previous, Next 버튼 활성화 처리
+          showPagination(page, totalPages);
 
-            // 다음 버튼 클릭 이벤트 처리
-            nextButton.on('click', function () {
-              const currentPage = parseInt(paginationContainer.find('.active').text());
-              if (currentPage < totalPages) {
-                showNewsPage(currentPage + 1, newsData);
-              }
-            });
+          if (page === 1) {
+            prevButton.prop('disabled', true);
+          } else {
+            prevButton.prop('disabled', false);
+          }
 
-            //showPagination 함수 추가
-            function showPagination(currentPage, totalPages) {
-              paginationContainer.empty();
-
-              const startPage = Math.max(1, currentPage - 2);
-              const endPage = Math.min(totalPages, startPage + 4);
-
-              for (let i = startPage; i <= endPage; i++) {
-                const paginationItem = `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
-                paginationContainer.append(paginationItem);
-              }
-            }
-
-
-              function showNewsPage(page, data) {
-                const startIndex = (page - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const currentPageData = data.slice(startIndex, endIndex);
-
-                container.empty();
-
-                currentPageData.forEach((item) => {
-                  const imageUrl = item.file || 'images/logo.png';
-                  const news_template = `<div class="container mt-3">
-                    <div class="custom-container">
-                      <div class="product">
-                        <div class="thumbnail" style="background-image: url('${imageUrl}')"></div>
-                        <div class="flex-grow-1 p-4">
-                          <h5 class="title"><a href="news-detail.html?id=${item.id}">${item.title}</a></h5>
-                          <p class="date">${item.date.toDate().toLocaleString()}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>`;
-                  container.append(news_template);
-                });
-
-                // Pagination 및 Previous, Next 버튼 활성화 처리
-                showPagination(page, totalPages);
-
-                if (page === 1) {
-                  prevButton.prop('disabled', true);
-                } else {
-                  prevButton.prop('disabled', false);
-                }
-
-                if (page === totalPages) {
-                  nextButton.prop('disabled', true);
-                } else {
-                  nextButton.prop('disabled', false);
-                }
-              }
-            });
-        });
+          if (page === totalPages) {
+            nextButton.prop('disabled', true);
+          } else {
+            nextButton.prop('disabled', false);
+          }
+        }
+      });
       
     </script>
   </body>
