@@ -1,4 +1,8 @@
-<!-- MoCRA 등록지원 -->
+<!-- pagination은 작동함 -->
+<!-- 하지만, 상세페이지 접속이 안되는 상태 -->
+<!-- 문서 id를 가지고 오질 못함 -->
+
+<!-- News -->
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
   <head>
@@ -25,7 +29,6 @@
     />
     <link rel="stylesheet" href="css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
   </head>
   <body>
     <!-- nav -->
@@ -126,28 +129,20 @@
       <!-- 하단 javascript 통해서 자동 게시 -->
     </div>
     <br>
-    <!-- pagination 추가 -->
-    <div class="container">
-      <ul class="pagination justify-content-center">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+<!-- pagination 추가 -->
+<div class="container">
+  <ul class="pagination justify-content-center">
+    <nav aria-label="Page navigation example" style="display: flex;">
+      <button class="btn btn-secondary" id="prev-btn"><</button>
+      <ul class="pagination justify-content-center" id="pagination-container">
+        <!-- Pagination이 여기에 동적으로 생성될 것입니다. -->
       </ul>
-    </div>
+      <button class="btn btn-secondary" id="next-btn">></button>
+    </nav>
+  </ul>
+</div>
+
+
     
     <!-- footer -->
     <div class="container">
@@ -209,30 +204,118 @@
       const db = firebase.firestore();
       db.collection('news').orderBy("date", "desc").get().then((result) => {
         const container = $('.news');
+        const newsData = [];
 
         result.forEach((doc) => {
-          console.log(doc.data());
+          const newsItem = doc.data();
+          newsItem.id = doc.id;
+          newsData.push(newsItem);
+              console.log(newsItem.id)
 
-          // 이미지 경로 확인 후 변수에 저장, 이미지가 없을 경우 기본 이미지 설정
-          const imageUrl = doc.data().file || 'images/logo.png';
+          // pagination 설정
+          const itemsPerPage = 5; // 한 페이지에 보여질 뉴스 수
+          const container = $('.news');
+          const paginationContainer = $('#pagination-container');
 
-          const news_template = `<div class="container mt-3">
-          <div class="custom-container">
-            <div class="product">
-                <div class="thumbnail" style="background-image: url('${imageUrl}')"></div>
-                <div class="flex-grow-1 p-4">
-                  <h5 class="title"><a href="news-detail.html?id=${doc.id}">${doc.data().title}</a></h5>
-                  <p class="date">${doc.data().date.toDate().toLocaleString()}</p>
-                </div>
-              </div>
-              </div>
-          </div>`;
-          container.append(news_template);
+          // pagination 및 previous, next 버튼 설정
+          const prevButton = $('#prev-btn');
+          const nextButton = $('#next-btn');
+
+          //총 페이지 수 변수 선언
+          const totalPages = Math.ceil(newsData.length / itemsPerPage);
+          console.log(totalPages)
+            
+          // Pagination 생성
+          for (let i = 1; i <= totalPages; i++) {
+            const paginationItem = `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+            paginationContainer.append(paginationItem);
+          }
+  
+          // 첫 페이지 로딩
+          showNewsPage(1, newsData);
+
+          // 페이지 클릭 이벤트를 document 전체에 걸어서 처리
+          $(document).on('click', '#pagination-container .page-link', function (e) {
+            e.preventDefault();
+            const selectedPage = parseInt($(this).data('page'));
+            showNewsPage(selectedPage, newsData);
+
+            // 스크롤 이동
+            $('html, body').animate({
+              scrollTop: $('.container').offset().top
+            }, 'slow');
+          });
+
+            // 이전 버튼 클릭 이벤트 처리
+            prevButton.on('click', function () {
+              const currentPage = parseInt(paginationContainer.find('.active').text());
+              if (currentPage > 1) {
+                showNewsPage(currentPage - 1, newsData);
+              }
+            });
+
+            // 다음 버튼 클릭 이벤트 처리
+            nextButton.on('click', function () {
+              const currentPage = parseInt(paginationContainer.find('.active').text());
+              if (currentPage < totalPages) {
+                showNewsPage(currentPage + 1, newsData);
+              }
+            });
+
+            //showPagination 함수 추가
+            function showPagination(currentPage, totalPages) {
+              paginationContainer.empty();
+
+              const startPage = Math.max(1, currentPage - 2);
+              const endPage = Math.min(totalPages, startPage + 4);
+
+              for (let i = startPage; i <= endPage; i++) {
+                const paginationItem = `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+                paginationContainer.append(paginationItem);
+              }
+            }
+
+
+              function showNewsPage(page, data) {
+                const startIndex = (page - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentPageData = data.slice(startIndex, endIndex);
+
+                container.empty();
+
+                currentPageData.forEach((item) => {
+                  const imageUrl = item.file || 'images/logo.png';
+                  const news_template = `<div class="container mt-3">
+                    <div class="custom-container">
+                      <div class="product">
+                        <div class="thumbnail" style="background-image: url('${imageUrl}')"></div>
+                        <div class="flex-grow-1 p-4">
+                          <h5 class="title"><a href="news-detail.html?id=${item.id}">${item.title}</a></h5>
+                          <p class="date">${item.date.toDate().toLocaleString()}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`;
+                  container.append(news_template);
+                });
+
+                // Pagination 및 Previous, Next 버튼 활성화 처리
+                showPagination(page, totalPages);
+
+                if (page === 1) {
+                  prevButton.prop('disabled', true);
+                } else {
+                  prevButton.prop('disabled', false);
+                }
+
+                if (page === totalPages) {
+                  nextButton.prop('disabled', true);
+                } else {
+                  nextButton.prop('disabled', false);
+                }
+              }
+            });
         });
-      });
-
-      //pagination 설정
-      
       
     </script>
   </body>
