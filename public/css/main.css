@@ -37,3 +37,165 @@
   color: grey;
   font-size: 13px;
 }
+
+/* 회원가입 / 로그인 */
+
+/* 입력창 */
+
+.authentication {
+  text-align: center;
+}
+
+.input_forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input_form {
+  /* layout */
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 15px;
+
+  /* typography */
+  color: #4f4f4f;
+  font-family: Gilroy-Medium;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.login_form {
+  /* layout */
+  width: 100%;
+  height: 30px;
+
+  /* style */
+  border-radius: 2px;
+  border: 1px solid #cacaca;
+  background: #fff;
+
+  /* box-shadow */
+  box-shadow: 2px 4px 6px 0px rgba(79, 79, 79, 0.15);
+}
+
+/* 로그인 버튼 */
+.submit_btn {
+  margin: 25px;
+}
+
+.login_btn {
+  /* layout */
+  width: 35%;
+  height: 34px;
+  flex-shrink: 0;
+
+  /* style */
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  background: #03a9f4;
+
+  /* box-shadow */
+  box-shadow: 2px 4px 6px 0px rgba(79, 79, 79, 0.15);
+
+  /* typography */
+  color: #fff;
+
+  font-family: Gilroy-Regular;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.login_btn:hover {
+  /* layout */
+  width: 35%;
+  height: 34px;
+  flex-shrink: 0;
+
+  /* style */
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  background: #0091d5;
+
+  /* box-shadow */
+  box-shadow: 2px 4px 6px 0px rgba(79, 79, 79, 0.15);
+
+  /* typography */
+  color: var(--Brand-Primary, #ededed);
+}
+
+.login_btn:active {
+  /* layout */
+  width: 35%;
+  height: 34px;
+  flex-shrink: 0;
+
+  /* style */
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  background: #01618e;
+
+  /* box-shadow */
+  box-shadow: 2px 4px 6px 0px rgba(79, 79, 79, 0.15);
+
+  /* typography */
+  color: var(--Brand-Primary, #ededed);
+}
+
+/* 다운로드 버튼 */
+.download {
+  /* layout */
+  display: inline-flex;
+  padding: 5px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  /* style */
+  border-radius: 4px;
+  border: 1px solid var(--Brand-Primary, #4caf4f);
+  background: var(--Neutral-White, #fff);
+
+  /* typography */
+  color: var(--Brand-Primary, #4caf4f);
+  text-align: center;
+  /* Button_Link/Normal */
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+}
+
+.download:hover {
+  /* layout */
+  display: inline-flex;
+  padding: 5px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* style */
+  border-radius: 4px;
+  border: 1px solid var(--Brand-Primary, #4caf4f);
+  background: var(--Neutral-Silver, #f5f7fa);
+}
+
+.download:active {
+  /* layout */
+  display: inline-flex;
+  padding: 5px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* style */
+  border-radius: 4px;
+  background: var(--Neutral-Silver, #f5f7fa);
+}

@@ -287,7 +287,7 @@
                     <br>
                     <p class="file">(선택)참고 파일
           ${item.file ?
-            `<button onclick="downloadFile('${item.file}')">다운로드</button>` :
+            `<button onclick="downloadFile('${item.file}')" class="download">다운로드</button>` :
             '<span>다운로드할 파일이 없습니다.</span>'}</p>
                     <p class="date">${item.date.toDate().toLocaleString()}</p>
                   </div>
