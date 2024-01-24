@@ -43,7 +43,7 @@
     </div>
     <!-- nav -->
     <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      class="navbar navbar-expand-lg navbar-light"
       aria-label="Tenth navbar example"
     >
       <div class="container-fluid">
@@ -339,6 +339,12 @@
 
               //console에 아이템 출력
               console.log(item);
+
+              // custom-container 클릭 시 링크 이동
+              container.on("click", ".custom-container", function () {
+                const link = $(this).find(".title a").attr("href");
+                window.location.href = link;
+              });
             });
 
             // Pagination 및 Previous, Next 버튼 활성화 처리
