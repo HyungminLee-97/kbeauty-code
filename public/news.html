@@ -323,7 +323,7 @@
             currentPageData.forEach((item) => {
               const imageUrl = item.file || "images/logo.png";
               const news_template = `<div class="container mt-3">
-              <div class="custom-container">
+              <div class="custom-container-click">
                 <div class="product">
                   <div class="thumbnail" style="background-image: url('${imageUrl}')"></div>
                   <div class="flex-grow-1 p-4">
@@ -340,8 +340,8 @@
               //console에 아이템 출력
               console.log(item);
 
-              // custom-container 클릭 시 링크 이동
-              container.on("click", ".custom-container", function () {
+              // custom-container-click 클릭 시 링크 이동
+              container.on("click", ".custom-container-click", function () {
                 const link = $(this).find(".title a").attr("href");
                 window.location.href = link;
               });
